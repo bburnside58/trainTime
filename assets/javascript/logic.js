@@ -1,15 +1,10 @@
 $( document ).ready(function() {
 
 
-
+// Firebase link to database:
 var traData = new Firebase("https://traintiming.firebaseio.com/");
 
-// var traName = '';
-// var traDest = '';
-// var traFirst = '';
-// var traFreq = '';
-
-
+//Submit button function
 $("#addTrainBtn").on("click", function(){
 
 	console.log("add train button working")
@@ -70,6 +65,11 @@ traData.on("child_added", function(childSnapshot, prevChildKey){
 	console.log(traFirst);
 	console.log(traFreq);
 
+
+
+	//Too much converting, I know I do not need to include unix time for this exercise, for a later date to fix/make efficient.
+	//Also, bug[can not enter frequency value larger than 59]
+
 	//Format the first train's time
 	var traStartFormat = moment.unix(traFirst).format("HH:mm");
 		console.log("Your train started at " + traStartFormat);
@@ -77,9 +77,6 @@ traData.on("child_added", function(childSnapshot, prevChildKey){
 	//Current time
 	var currentTime = moment();
 		console.log("Current Time is " + moment(currentTime).format("HH:mm"));
-
-	// var timeDiff = moment().diff(moment.unix(traFirst, 'X'), "minutes");
-	// 	console.log("Difference in Time is: " + timeDiff);
 
 	//Difference between the current time and the first train's time
 	var timeDiff = moment().diff(moment.unix(traFirst, 'X'), "minutes");
@@ -107,49 +104,12 @@ traData.on("child_added", function(childSnapshot, prevChildKey){
 
 	var nextArrival = moment(nextTrain).format("HH:mm");
 
-	// // Prettify the train start////////////////////////////////////////////////////////////////////
 
-	// //Prettify the frequency
-	var traFreqFormat = moment.unix(traFreq).format("mm");
-	console.log("Your frequency is " + traFreqFormat);
-
-
-	// // //Here I am making 2 z variables to break the equation into 2 parts, zTop and z.
-	// var zTop = moment().diff(moment.unix(traFirst, 'X'), "minutes");
-	// console.log("The difference between the current time and the first time in minutes is " + zTop)
-
-
-
-
-
-
-	// // Calculate the months worked using hardconre math
-	// // To calculate the months worked 
-	// var nextArrival = moment().diff(moment.unix(traFirst, 'X'), "minutes");
-	// console.log("Your next arrival is " + nextArrival);
-
-
-
-
-	// var minAway = 
-
-
-
+	//Push to html table:
 	$("#trainTable > tbody").append("<tr><td>" + traName + "</td><td>" + traDest + "</td><td>" + traFreqFormat + "</td><td>" + nextArrival + "</td><td>" + tMinutesTillTrain + "</td></tr>");
 
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
 
 })
